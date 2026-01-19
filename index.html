@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1650"> 
     <title>Executive Report - Zona A</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -10,38 +10,47 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #111827; }
+        /* Mengunci lebar body agar tidak ciut di HP */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #f8fafc; 
+            color: #111827; 
+            min-width: 1650px; 
+            overflow-x: auto; 
+        }
+
         .report-card { @apply border border-slate-200 rounded-xl bg-white p-4 shadow-sm; }
         
         table.dataTable thead th {
-            @apply bg-slate-900 text-white font-black uppercase text-[9px] tracking-widest p-2 !important;
+            @apply bg-slate-900 text-white font-black uppercase text-[10px] tracking-widest p-2 !important;
             border: none !important;
         }
         
         table.dataTable tbody td {
-            @apply p-1.5 border-b border-slate-50 text-[10px] font-bold !important;
+            @apply p-1.5 border-b border-slate-50 text-[11px] font-bold !important;
         }
 
         .grand-total-row { @apply bg-slate-900 text-white !important; }
         .grand-total-row td { @apply text-white p-2 !important; }
 
-        .badge { @apply px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-tight; }
+        .badge { @apply px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-tight; }
 
+        /* Style Pending Item yang Tahan Banting untuk Teks Panjang */
         .pending-item {
-            @apply flex flex-col justify-center p-3 mb-2 bg-white border-l-[8px] border-red-600 rounded-r-lg shadow-sm border border-slate-100;
+            @apply flex flex-col justify-center p-3 mb-3 bg-red-600 rounded-xl shadow-md border-b-4 border-red-800;
         }
 
         .split-grid {
-            display: grid; grid-template-cols: 1fr 1fr; gap: 0;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
         }
         .split-grid div:first-child { border-right: 1px solid #e2e8f0; }
     </style>
 </head>
-<body class="p-4 max-w-[1650px] mx-auto">
+<body class="p-4 mx-auto">
 
     <div class="border-b-4 border-slate-900 pb-3 mb-6 flex justify-between items-end">
         <div>
-            <h1 class="text-3xl font-black tracking-tighter uppercase text-red-500 leading-none">ERAFONE <span class="text-yellow-400">ZONA A</span></h1>
+            <h1 class="text-4xl font-black tracking-tighter uppercase text-red-500 leading-none">ERAFONE <span class="text-yellow-400">ZONA A</span></h1>
             <p class="text-slate-500 font-bold text-lg mt-1 uppercase tracking-widest text-indigo-600">TSH by PAK MUH JODI HARYONO</p>
         </div>
         <div class="text-right">
@@ -51,16 +60,16 @@
 
     <div class="grid grid-cols-4 gap-4 mb-6">
         <div class="report-card border-t-4 border-t-indigo-600">
-            <p class="text-[20px] font-bold text-slate-400 uppercase tracking-widest">Total Followers</p>
-            <p id="card-followers" class="text-3xl font-black text-slate-900">-</p>
+            <p class="text-[18px] font-bold text-slate-400 uppercase tracking-widest">Total Followers</p>
+            <p id="card-followers" class="text-4xl font-black text-slate-900">-</p>
         </div>
         <div class="report-card border-t-4 border-t-slate-800">
-            <p class="text-[20px] font-bold text-slate-400 uppercase tracking-widest">Total Unit Device</p>
-            <p id="card-device" class="text-3xl font-black text-slate-900">-</p>
+            <p class="text-[18px] font-bold text-slate-400 uppercase tracking-widest">Total Unit Device</p>
+            <p id="card-device" class="text-4xl font-black text-slate-900">-</p>
         </div>
         <div id="status-container" class="report-card border-t-4 border-t-red-600">
-            <p class="text-[20px] font-bold text-slate-400 uppercase tracking-widest">Progress Verifikasi</p>
-            <p id="card-status" class="text-2xl font-black uppercase">-</p>
+            <p class="text-[18px] font-bold text-slate-400 uppercase tracking-widest">Progress Verifikasi</p>
+            <p id="card-status" class="text-3xl font-black uppercase">-</p>
         </div>
         <div class="report-card bg-slate-900 flex items-center justify-center text-center">
             <p class="text-white font-black text-[20px] tracking-[0.3em] uppercase opacity-50 italic">Internal Use Only</p>
@@ -69,15 +78,15 @@
 
     <div class="grid grid-cols-12 gap-6 items-start">
         <div class="col-span-5 border border-slate-200 rounded-xl overflow-hidden shadow-lg bg-white">
-            <div class="bg-slate-900 text-white p-2 font-black text-[10px] tracking-widest uppercase text-center border-b border-slate-700">I. Statistik Store</div>
+            <div class="bg-slate-900 text-white p-2.5 font-black text-[11px] tracking-widest uppercase text-center border-b border-slate-700">I. Statistik Store</div>
             <div class="split-grid">
-                <div><table id="tableLeft1" class="w-full "></table></div>
+                <div><table id="tableLeft1" class="w-full"></table></div>
                 <div><table id="tableLeft2" class="w-full"></table></div>
             </div>
         </div>
 
         <div class="col-span-4 border border-slate-200 rounded-xl overflow-hidden shadow-lg bg-white">
-            <div class="bg-slate-800 text-white p-2 font-black text-[10px] tracking-widest uppercase text-center border-b border-slate-700">II. Status Submit</div>
+            <div class="bg-slate-800 text-white p-2.5 font-black text-[11px] tracking-widest uppercase text-center border-b border-slate-700">II. Status Submit</div>
             <div class="split-grid">
                 <div><table id="tableRight1" class="w-full"></table></div>
                 <div><table id="tableRight2" class="w-full"></table></div>
@@ -85,9 +94,9 @@
         </div>
 
         <div class="col-span-3 flex flex-col h-full">
-            <div class="bg-red-600 text-white p-2 font-black text-[20px] uppercase text-center rounded-t-xl tracking-widest shadow-md">⚠ WAJIB FOLLOW UP</div>
-            <div id="pending-list-container" class="bg-slate-100 p-4 rounded-b-xl border border-slate-200 min-h-[400px]">
-                <p class="text-slate-400 text-[10px] italic text-center py-10">Menganalisis data...</p>
+            <div class="bg-red-600 text-white p-2.5 font-black text-[18px] uppercase text-center rounded-t-xl tracking-widest shadow-md">⚠ STORE YANG BELUM SUBMIT</div>
+            <div id="pending-list-container" class="bg-slate-100 p-4 rounded-b-xl border border-slate-200 min-h-[500px]">
+                <p class="text-slate-400 text-[11px] italic text-center py-10">Menganalisis data...</p>
             </div>
         </div>
     </div>
@@ -108,12 +117,10 @@
             complete: function(results) {
                 const data = results.data;
                 const content = data.slice(1);
-
                 let totalFoll = 0, totalDev = 0, pendingCount = 0;
                 let listBelum = [];
                 let grandTotalRow = null;
 
-                // FILTER: Hanya ambil baris yang punya Nama Store di Kolom A
                 const pureData = content.filter(row => {
                     const colA = (row[0] || "").trim();
                     if (colA.includes("Grand Total")) {
@@ -121,14 +128,11 @@
                         totalDev = row[1]; totalFoll = row[2];
                         return false;
                     }
-                    // Validasi: Harus ada nama store (A) dan baris tidak kosong
                     return colA !== "" && colA.toLowerCase() !== "store"; 
                 });
 
-                // Filter data untuk Status Submit (Kolom E & F)
                 const submitData = pureData.filter(row => {
                     const namaDevice = (row[4] || "").trim();
-                    // Abaikan jika kolom E berisi kata "Store" atau kosong
                     return namaDevice !== "" && namaDevice.toLowerCase() !== "store";
                 });
 
@@ -146,15 +150,27 @@
 
                 const pContainer = $('#pending-list-container');
                 pContainer.empty();
+                
                 if(listBelum.length === 0) {
                     pContainer.append('<p class="text-emerald-600 font-bold text-center py-10">SEMUA SUDAH SUBMIT ✅</p>');
                 } else {
                     listBelum.forEach(toko => {
-                        pContainer.append(`<div class="pending-item"><span class="text-red-600 font-semibold text-lg  uppercase font-black ">${toko}</span><span class="font-black text-xl text-yellow-500 text-[8px] font-bold mt-1 uppercase italic"> ⚠ Belum Submit</span></div>`);
+                        pContainer.append(`
+                            <div class="pending-item">
+                                <div class="bg-yellow-400 p-2 rounded-lg mb-1 shadow-inner">
+                                    <span class="text-red-600 font-black text-sm uppercase break-words block text-center leading-tight">
+                                        ${toko}
+                                    </span>
+                                </div>
+                                <span class="font-black text-[10px] text-white uppercase italic text-center block">
+                                    ⚠ Segera Submit Laporan
+                                </span>
+                            </div>
+                        `);
                     });
                 }
 
-                // Render Table I
+                // Render Tables
                 const midStat = Math.ceil(pureData.length / 2);
                 const statRight = pureData.slice(midStat);
                 if(grandTotalRow) statRight.push(grandTotalRow);
@@ -167,7 +183,6 @@
                 $('#tableLeft1').DataTable(cfgStat(pureData.slice(0, midStat)));
                 $('#tableLeft2').DataTable(cfgStat(statRight, true));
 
-                // Render Table II
                 const midSub = Math.ceil(submitData.length / 2);
                 const cfgSub = (d) => ({
                     data: d, columns: [ {title:"NAMA TOKO", data:4}, {title:"STATUS", data:5, render: v => (v||"").toLowerCase().includes("sudah") ? `<span class="badge bg-emerald-500 text-white block text-center">DONE</span>` : `<span class="badge bg-red-100 text-red-600 block text-center">BELUM</span>`} ],
