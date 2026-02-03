@@ -2,196 +2,248 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1650"> 
-    <title>Executive Report - Zona A</title>
+    <meta name="viewport" content="width=1400"> 
+    <title>Daily Report Zona A - Dion</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* Mengunci lebar body agar tidak ciut di HP */
         body { 
-            font-family: 'Inter', sans-serif; 
-            background: #f8fafc; 
-            color: #111827; 
-            min-width: 1650px; 
-            overflow-x: auto; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #F1F5F9; 
+            color: #1E293B;
+            min-width: 1400px;
+            margin: 0;
+            padding: 20px;
+            position: relative;
         }
 
-        .report-card { @apply border border-slate-200 rounded-xl bg-white p-4 shadow-sm; }
-        
-        table.dataTable thead th {
-            @apply bg-slate-900 text-white font-black uppercase text-[10px] tracking-widest p-2 !important;
-            border: none !important;
-        }
-        
-        table.dataTable tbody td {
-            @apply p-1.5 border-b border-slate-50 text-[11px] font-bold !important;
-        }
-
-        .grand-total-row { @apply bg-slate-900 text-white !important; }
-        .grand-total-row td { @apply text-white p-2 !important; }
-
-        .badge { @apply px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-tight; }
-
-        /* Style Pending Item yang Tahan Banting untuk Teks Panjang */
-        .pending-item {
-            @apply flex flex-col justify-center p-3 mb-3 bg-red-600 rounded-xl shadow-md border-b-4 border-red-800;
+        /* Watermark Digital Nama Dion */
+        body::before {
+            content: "CREATED BY DION • ERAFONE ZONA A";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-25deg);
+            font-size: 100px;
+            font-weight: 900;
+            color: rgba(0,0,0,0.015);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .split-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+        .header-box {
+            background: #0F172A;
+            color: white;
+            padding: 20px 35px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-right: 6px solid #F59E0B;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
         }
-        .split-grid div:first-child { border-right: 1px solid #e2e8f0; }
+
+        /* Card Gelap agar Teks Putih Tajam (Sesuai Request) */
+        .card-dark {
+            background: #1E293B; 
+            border-radius: 10px;
+            padding: 15px 20px;
+            border: 1px solid #334155;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        thead th { 
+            padding: 5px 10px;
+            text-align: left;
+            font-size: 9px;
+            font-weight: 800;
+            color: #94A3B8;
+            text-transform: uppercase;
+            border-bottom: 1px solid #334155;
+        }
+        tbody td { 
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+        tbody tr:nth-child(even) { background-color: rgba(255,255,255,0.03); }
+
+        .status-pill {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 8.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .status-done { background: #10B981; color: white; }
+        .status-pending { background: #EF4444; color: white; }
     </style>
 </head>
-<body class="p-4 mx-auto">
+<body>
 
-    <div class="border-b-4 border-slate-900 pb-3 mb-6 flex justify-between items-end">
-        <div>
-            <h1 class="text-4xl font-black tracking-tighter uppercase text-red-500 leading-none">ERAFONE <span class="text-yellow-400">ZONA A</span></h1>
-            <p class="text-slate-500 font-bold text-lg mt-1 uppercase tracking-widest text-indigo-600">TSH by PAK MUH JODI HARYONO</p>
+    <div class="header-box flex justify-between items-center">
+        <div class="flex items-center gap-8">
+            <div>
+                <h1 class="text-2xl font-black tracking-tighter uppercase font-['Space_Grotesk'] text-amber-500">ZONA A <span class="text-white">REPORT</span></h1>
+                <p class="text-[9px] font-bold text-slate-500 tracking-[0.3em] uppercase">Erafone Artha Retailindo</p>
+            </div>
+            
+            <div class="h-10 w-[1px] bg-slate-700"></div>
+
+            <div>
+                <p class="text-[8px] font-black text-amber-500 uppercase tracking-widest mb-1">Prepared By</p>
+                <p class="text-xl font-black text-white leading-none tracking-tight">DION</p>
+            </div>
+
+            <div>
+                <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Acknowledged By</p>
+                <p class="text-sm font-bold text-slate-300 leading-none">Pak Muh Jodi Haryono</p>
+            </div>
         </div>
+
         <div class="text-right">
-            <p id="current-date" class="text-sm font-black text-slate-900 bg-yellow-400 px-3 py-1 rounded-full inline-block shadow-sm"></p>
+            <p id="current-date" class="text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-1"></p>
+            <p id="live-clock" class="text-3xl font-black font-mono leading-none text-white tracking-tighter"></p>
         </div>
     </div>
 
-    <div class="grid grid-cols-4 gap-4 mb-6">
-        <div class="report-card border-t-4 border-t-indigo-600">
-            <p class="text-[18px] font-bold text-slate-400 uppercase tracking-widest">Total Followers</p>
-            <p id="card-followers" class="text-4xl font-black text-slate-900">-</p>
+    <div class="grid grid-cols-3 gap-3 mb-3">
+        <div class="card-dark !bg-slate-900 border-t-2 border-t-blue-500">
+            <p class="text-[9px] font-black text-slate-500 uppercase">Total Followers</p>
+            <p id="card-followers" class="text-3xl font-black text-white">0</p>
         </div>
-        <div class="report-card border-t-4 border-t-slate-800">
-            <p class="text-[18px] font-bold text-slate-400 uppercase tracking-widest">Total Unit Device</p>
-            <p id="card-device" class="text-4xl font-black text-slate-900">-</p>
+        <div class="card-dark !bg-slate-900 border-t-2 border-t-slate-600">
+            <p class="text-[9px] font-black text-slate-500 uppercase">Target Device</p>
+            <p id="card-device" class="text-3xl font-black text-slate-400">0</p>
         </div>
-        <div id="status-container" class="report-card border-t-4 border-t-red-600">
-            <p class="text-[18px] font-bold text-slate-400 uppercase tracking-widest">Progress Verifikasi</p>
-            <p id="card-status" class="text-3xl font-black uppercase">-</p>
-        </div>
-        <div class="report-card bg-slate-900 flex items-center justify-center text-center">
-            <p class="text-white font-black text-[20px] tracking-[0.3em] uppercase opacity-50 italic">Internal Use Only</p>
+        <div class="card-dark !bg-slate-900 border-t-2 border-t-rose-600">
+            <p class="text-[9px] font-black text-rose-500 uppercase italic">Awaiting Submission</p>
+            <p id="card-status" class="text-3xl font-black text-rose-600">0</p>
         </div>
     </div>
 
-    <div class="grid grid-cols-12 gap-6 items-start">
-        <div class="col-span-5 border border-slate-200 rounded-xl overflow-hidden shadow-lg bg-white">
-            <div class="bg-slate-900 text-white p-2.5 font-black text-[11px] tracking-widest uppercase text-center border-b border-slate-700">I. Statistik Store</div>
-            <div class="split-grid">
-                <div><table id="tableLeft1" class="w-full"></table></div>
-                <div><table id="tableLeft2" class="w-full"></table></div>
+    <div class="grid grid-cols-12 gap-3">
+        <div class="col-span-8 space-y-3">
+            <div class="card-dark">
+                <h2 class="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-3 flex items-center gap-2">
+                    <span class="w-1.5 h-3 bg-amber-500 rounded-sm"></span> Store Achievement
+                </h2>
+                <div id="stat-split-container" class="grid grid-cols-2 gap-8"></div>
+            </div>
+
+            <div class="card-dark">
+                <h2 class="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-3 flex items-center gap-2">
+                    <span class="w-1.5 h-3 bg-amber-500 rounded-sm"></span> Validation Monitoring
+                </h2>
+                <div id="sub-split-container" class="grid grid-cols-2 gap-8"></div>
             </div>
         </div>
 
-        <div class="col-span-4 border border-slate-200 rounded-xl overflow-hidden shadow-lg bg-white">
-            <div class="bg-slate-800 text-white p-2.5 font-black text-[11px] tracking-widest uppercase text-center border-b border-slate-700">II. Status Submit</div>
-            <div class="split-grid">
-                <div><table id="tableRight1" class="w-full"></table></div>
-                <div><table id="tableRight2" class="w-full"></table></div>
-            </div>
-        </div>
-
-        <div class="col-span-3 flex flex-col h-full">
-            <div class="bg-red-600 text-white p-2.5 font-black text-[18px] uppercase text-center rounded-t-xl tracking-widest shadow-md">⚠ STORE YANG BELUM SUBMIT</div>
-            <div id="pending-list-container" class="bg-slate-100 p-4 rounded-b-xl border border-slate-200 min-h-[500px]">
-                <p class="text-slate-400 text-[11px] italic text-center py-10">Menganalisis data...</p>
+        <div class="col-span-4">
+            <div class="card-dark h-full !bg-[#0F172A]">
+                <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
+                    <h2 class="text-[10px] font-black uppercase text-rose-500 tracking-tight italic underline">Action Required</h2>
+                    <span id="pending-badge" class="bg-rose-600 text-white text-[9px] px-2 py-0.5 rounded-full font-black">0</span>
+                </div>
+                <div id="pending-list" class="space-y-1.5">
+                    </div>
+                <div class="mt-8 pt-4 border-t border-slate-800">
+                    <p class="text-[8px] text-slate-600 font-bold uppercase tracking-[0.2em] text-center">
+                        Generated by Dion System v2.0
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
     <script>
-        const d = new Date();
-        $('#current-date').text(d.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' }));
+        function updateClock() {
+            const now = new Date();
+            $('#live-clock').text(now.toLocaleTimeString('id-ID', { hour12: false }));
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
         const csvUrl = 'https://docs.google.com/spreadsheets/d/1ux5D0acgEhyTLHS2Jpn8rfqO6e-NV7p032AZU2jvRkc/export?format=csv&gid=408939587';
+        $('#current-date').text(new Date().toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' }));
 
         Papa.parse(csvUrl, {
             download: true,
             header: false,
             complete: function(results) {
                 const data = results.data;
-                const content = data.slice(1);
-                let totalFoll = 0, totalDev = 0, pendingCount = 0;
-                let listBelum = [];
-                let grandTotalRow = null;
+                const statData = [];
+                const subData = [];
+                const pendingStores = [];
+                let grandTotal = null;
 
-                const pureData = content.filter(row => {
+                data.forEach(row => {
                     const colA = (row[0] || "").trim();
-                    if (colA.includes("Grand Total")) {
-                        grandTotalRow = row;
-                        totalDev = row[1]; totalFoll = row[2];
-                        return false;
+                    const colE = (row[4] || "").trim();
+                    const colF = (row[5] || "").trim().toLowerCase();
+
+                    if(colA !== "" && colA.toLowerCase() !== "store" && colA.toLowerCase() !== "followers zona a") {
+                        if(colA.includes("Grand Total")) grandTotal = row;
+                        else statData.push(row);
                     }
-                    return colA !== "" && colA.toLowerCase() !== "store"; 
-                });
-
-                const submitData = pureData.filter(row => {
-                    const namaDevice = (row[4] || "").trim();
-                    return namaDevice !== "" && namaDevice.toLowerCase() !== "store";
-                });
-
-                submitData.forEach(row => {
-                    const status = (row[5] || "").trim().toLowerCase();
-                    if (status.includes("belum")) {
-                        pendingCount++;
-                        listBelum.push(row[4].trim());
+                    if(colE !== "" && colE.toLowerCase() !== "nama toko") {
+                        subData.push(row);
+                        if(colF.includes("belum")) pendingStores.push(colE);
                     }
                 });
 
-                $('#card-followers').text(totalFoll);
-                $('#card-device').text(totalDev);
-                $('#card-status').text(pendingCount + " TOKO PENDING").toggleClass('text-red-600', pendingCount > 0);
-
-                const pContainer = $('#pending-list-container');
-                pContainer.empty();
-                
-                if(listBelum.length === 0) {
-                    pContainer.append('<p class="text-emerald-600 font-bold text-center py-10">SEMUA SUDAH SUBMIT ✅</p>');
-                } else {
-                    listBelum.forEach(toko => {
-                        pContainer.append(`
-                            <div class="pending-item">
-                                <div class="bg-yellow-400 p-2 rounded-lg mb-1 shadow-inner">
-                                    <span class="text-red-600 font-black text-sm uppercase break-words block text-center leading-tight">
-                                        ${toko}
-                                    </span>
-                                </div>
-                                <span class="font-black text-[10px] text-white uppercase italic text-center block">
-                                    ⚠ Segera Submit Laporan
-                                </span>
-                            </div>
-                        `);
-                    });
+                if(grandTotal) {
+                    $('#card-followers').text(grandTotal[2]);
+                    $('#card-device').text(grandTotal[1]);
                 }
+                $('#card-status').text(pendingStores.length);
+                $('#pending-badge').text(pendingStores.length);
 
-                // Render Tables
-                const midStat = Math.ceil(pureData.length / 2);
-                const statRight = pureData.slice(midStat);
-                if(grandTotalRow) statRight.push(grandTotalRow);
-
-                const cfgStat = (d, isR = false) => ({
-                    data: d, columns: [ {title:"STORE", data:0}, {title:"DEV", data:1}, {title:"FOLL", data:2}, {title:"%", data:3, className:"text-indigo-600 font-black"} ],
-                    ordering: false, paging: false, info: false, searching: false,
-                    createdRow: (row, d) => { if(isR && d[0].includes("Grand Total")) $(row).addClass('grand-total-row'); }
+                const pList = $('#pending-list').empty();
+                pendingStores.forEach(name => {
+                    pList.append(`
+                        <div class="flex justify-between items-center p-2 bg-slate-900/40 border border-white/5 rounded-lg">
+                            <span class="text-[10px] font-bold text-white uppercase truncate pr-2">${name}</span>
+                            <span class="text-[8px] font-black text-rose-500">PENDING</span>
+                        </div>
+                    `);
                 });
-                $('#tableLeft1').DataTable(cfgStat(pureData.slice(0, midStat)));
-                $('#tableLeft2').DataTable(cfgStat(statRight, true));
 
-                const midSub = Math.ceil(submitData.length / 2);
-                const cfgSub = (d) => ({
-                    data: d, columns: [ {title:"NAMA TOKO", data:4}, {title:"STATUS", data:5, render: v => (v||"").toLowerCase().includes("sudah") ? `<span class="badge bg-emerald-500 text-white block text-center">DONE</span>` : `<span class="badge bg-red-100 text-red-600 block text-center">BELUM</span>`} ],
-                    ordering: false, paging: false, info: false, searching: false
-                });
-                $('#tableRight1').DataTable(cfgSub(submitData.slice(0, midSub)));
-                $('#tableRight2').DataTable(cfgSub(submitData.slice(midSub)));
+                renderSplitTable('#stat-split-container', statData, ["Store", "Dev", "Foll", "%"], [0,1,2,3]);
+                renderSplitTable('#sub-split-container', subData, ["Toko", "Status"], [4,5]);
             }
         });
+
+        function renderSplitTable(containerId, rawData, headers, indexes) {
+            const container = $(containerId).empty();
+            const half = Math.ceil(rawData.length / 2);
+            const cols = [rawData.slice(0, half), rawData.slice(half)];
+
+            cols.forEach(colData => {
+                let html = '<div><table><thead><tr>';
+                headers.forEach(h => html += `<th>${h}</th>`);
+                html += '</tr></thead><tbody>';
+                colData.forEach(row => {
+                    html += '<tr>';
+                    indexes.forEach(idx => {
+                        let val = row[idx] || "-";
+                        if(idx === 5) {
+                            const isDone = val.toLowerCase().includes("sudah");
+                            val = `<span class="status-pill ${isDone ? 'status-done' : 'status-pending'}">${isDone ? 'Done' : 'Belum'}</span>`;
+                        }
+                        html += `<td>${val}</td>`;
+                    });
+                    html += '</tr>';
+                });
+                html += '</tbody></table></div>';
+                container.append(html);
+            });
+        }
     </script>
 </body>
 </html>
